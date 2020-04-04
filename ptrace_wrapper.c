@@ -37,7 +37,13 @@ long ptrace(ptreq request, ...)
     void *data = va_arg(args, void *);
 
     log_ptrace(request, pid, addr, data);
-    return real_ptrace(request, pid, addr, data);
+    long real_ret = real_ptrace(request, pid, addr, data);
+
+    // Fake success
+    if(real_ret < 0) {
+        return 0;
+    }
+    return real_ret;
 }
 
 const char *ptrace_req_str(ptreq request)
