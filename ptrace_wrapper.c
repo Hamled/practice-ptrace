@@ -35,6 +35,7 @@ long ptrace(ptreq request, ...)
     pid_t pid = va_arg(args, pid_t);
     void *addr = va_arg(args, void *);
     void *data = va_arg(args, void *);
+    va_end(args);
 
     log_ptrace(request, pid, addr, data);
     long real_ret = real_ptrace(request, pid, addr, data);
