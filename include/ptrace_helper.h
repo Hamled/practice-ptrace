@@ -13,6 +13,7 @@ typedef enum __ptrace_request ptreq;
 typedef long (*ptrace_func)(ptreq, ...);
 
 void log_ptrace(ptreq request, pid_t pid, void *addr, void *data);
+long ptrace_handler(ptrace_func, ptreq, pid_t, void *, void *);
 
 long ptrace(ptreq request, ...)
 {
@@ -33,13 +34,7 @@ long ptrace(ptreq request, ...)
     va_end(args);
 
     log_ptrace(request, pid, addr, data);
-    long real_ret = real_ptrace(request, pid, addr, data);
-
-    // Fake success
-    if(real_ret < 0) {
-        return 0;
-    }
-    return real_ret;
+    return ptrace_handler(real_ptrace, request, pid, addr, data);
 }
 
 // Logging code
