@@ -10,16 +10,9 @@
 #include <dlfcn.h>
 
 typedef enum __ptrace_request ptreq;
-
-const char *ptrace_req_str(ptreq);
-
-void log_ptrace(ptreq request, pid_t pid, void *addr, void *data)
-{
-    const char *req_str = ptrace_req_str(request);
-    printf("ptrace(%s, %ld, %p, %p)\n", req_str, (long)pid, addr, data);
-}
-
 typedef long (*ptrace_func)(ptreq, ...);
+
+void log_ptrace(ptreq request, pid_t pid, void *addr, void *data);
 
 long ptrace(ptreq request, ...)
 {
@@ -47,6 +40,16 @@ long ptrace(ptreq request, ...)
         return 0;
     }
     return real_ret;
+}
+
+// Logging code
+
+const char *ptrace_req_str(ptreq);
+
+void log_ptrace(ptreq request, pid_t pid, void *addr, void *data)
+{
+    const char *req_str = ptrace_req_str(request);
+    printf("ptrace(%s, %ld, %p, %p)\n", req_str, (long)pid, addr, data);
 }
 
 const char *ptrace_req_str(ptreq request)
