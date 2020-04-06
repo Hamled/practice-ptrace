@@ -23,6 +23,12 @@ This is the simplest anti-debugging technique with ptrace, just calling
 `ptrace()` once and checking for a negative return value to indicate the
 presence of an attached debugger.
 
+### Level 02
+This is slightly more involved than the previous level, it calls `ptrace()` a
+second time and checks that this second call fails because of the first attach.
+
+The code for this was inspired by [a blog post from Sebastian Auberger][0].
+
 
 ## Building
 The examples build with GCC 9.3.0 on my Arch Linux machine. There should be no
@@ -43,3 +49,7 @@ Just run `make` or `make all`.
 #### Cleaning
 * Everything: `make clean`
 * Specific level: `make level-NN-clean`
+
+
+
+[0]: https://seblau.github.io/posts/linux-anti-debugging

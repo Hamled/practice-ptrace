@@ -8,7 +8,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror
 WRAPPER_FLAGS=-Iinclude -D_GNU_SOURCE -fPIC -ldl -shared
 
-LEVELS = level-01
+LEVELS = level-01 level-02
 
 .PHONY: all
 all: build test
