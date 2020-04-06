@@ -25,7 +25,7 @@ $(1): $(1)-build $(1)-test
 
 $(1)-build: $(1)/ptrace-client $(1)/ptrace-wrapper.so
 
-$(1)-test: $(1)
+$(1)-test: $(1)-build
 	@echo
 	@echo '===Testing $(1) without wrapper'
 	@echo '======program output:'
