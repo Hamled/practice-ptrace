@@ -29,6 +29,10 @@ second time and checks that this second call fails because of the first attach.
 
 The code for this was inspired by [a blog post from Sebastian Auberger][0].
 
+### Level 03
+This client attempts to complicate matters by spawning a child process which
+attempts to attach to its parent, and the parent attaches to the child.
+
 
 ## Building
 The examples build with GCC 9.3.0 on my Arch Linux machine. There should be no

@@ -8,7 +8,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror
 WRAPPER_FLAGS=-Iinclude -D_GNU_SOURCE -fPIC -ldl -shared
 
-LEVELS = level-01 level-02
+LEVELS = level-01 level-02 level-03
 
 .PHONY: all
 all: build test
@@ -29,7 +29,7 @@ $(1)-test: $(1)-build
 	@echo
 	@echo '===Testing $(1) without wrapper'
 	@echo '======program output:'
-	@strace -e trace=write,ptrace -o ./strace_out ./$(1)/ptrace-client || true
+	@strace -f -e write,ptrace -o ./strace_out ./$(1)/ptrace-client || true
 	@echo
 	@echo '======strace output:'
 	@cat ./strace_out
@@ -39,7 +39,7 @@ $(1)-test: $(1)-build
 	@echo
 	@echo '===Testing $(1) with wrapper'
 	@echo '======program output:'
-	@strace -e trace=write,ptrace -o ./strace_out env LD_PRELOAD=./$(1)/ptrace-wrapper.so ./$(1)/ptrace-client || true
+	@strace -f -e write,ptrace -o ./strace_out env LD_PRELOAD=./$(1)/ptrace-wrapper.so ./$(1)/ptrace-client || true
 	@echo
 	@echo '======strace output:'
 	@cat ./strace_out
